@@ -153,6 +153,12 @@ void processImages(char* fistFrameFilename) {
         string nextFrameFilename = prefix + nextFrameNumberString + suffix;
         //read the next frame
         frame = imread(nextFrameFilename);
+        // save subtracted images
+        string imageToSave =("output_MOG_" +  frameNumberString + ".png");
+        bool saved = imwrite("/Users/jayyoungyang/data/" +imageToSave,fgMaskMOG2);
+        if(!saved) {
+            cerr << "Unable to save " << imageToSave << endl;
+        }
         if(frame.empty()){
             //error in opening the next image in the sequence
             cerr << "Unable to open image frame: " << nextFrameFilename << endl;
@@ -160,13 +166,6 @@ void processImages(char* fistFrameFilename) {
         }
         //update the path of the current frame
         fn.assign(nextFrameFilename);
-        
-        // save subtracted images
-        string imageToSave =("output_MOG_" +  frameNumberString + ".png");
-        bool saved = imwrite("/Users/jayyoungyang/data/" +imageToSave,fgMaskMOG2);
-        if(!saved) {
-            cerr << "Unable to save " << imageToSave << endl;
-        }
     }
 }
 
